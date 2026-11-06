@@ -1,0 +1,10 @@
+# Keep line endings stable across platforms.
+* text=auto
+
+gradlew text eol=lf
+gradlew.bat text eol=crlf
+
+# Binaries
+*.jar binary
+*.apk binary
+*.aab binary

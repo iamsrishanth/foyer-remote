@@ -108,3 +108,7 @@ BtHid.java          BluetoothHidDevice wrapper
 HidService.java     foreground service that owns the HID registration
 DESIGN.md           the design specification this UI implements
 ```
+
+## License
+
+MIT — see [LICENSE](LICENSE).
