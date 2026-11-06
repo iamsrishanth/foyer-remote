@@ -1,0 +1,20 @@
+# Gradle / Android build state
+.gradle/
+build/
+local.properties
+
+# IDE and OS noise
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Build outputs and captured artefacts: keep them out of git, attach APKs to a Release instead
+dist/
+*.apk
+*.aab
+
+# Signing material must never be committed
+*.jks
+*.keystore
+*.p12

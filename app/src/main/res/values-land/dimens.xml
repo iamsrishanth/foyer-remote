@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Landscape geometry for a phone held sideways: a 985 x 443 dp screen has roughly half the vertical
+  room of portrait, so the pad shrinks and the rows tighten. Colours and text sizes are never
+  overridden here - only the box sizes - so the design stays one design.
+
+  Budget at 443dp tall: header ~56 + transport ~64 + pad slot 168 = 288, leaving ~155dp for the
+  nav (48) + volume (48) + bottom (48) rows and their 8dp gaps.
+-->
+<resources>
+
+    <dimen name="space_md">12dp</dimen>
+    <dimen name="space_lg">16dp</dimen>
+
+    <dimen name="pad_key">52dp</dimen>
+    <dimen name="pad_ok_size">64dp</dimen>
+    <dimen name="pad_gap">4dp</dimen>
+    <dimen name="pad_key_margin">2dp</dimen>
+    <dimen name="pad_slot_height">136dp</dimen>
+
+    <dimen name="nav_key">48dp</dimen>
+
+</resources>

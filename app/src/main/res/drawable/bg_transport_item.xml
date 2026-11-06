@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Transport segment, UNSELECTED variant (Lead contract: transparent fill,
+     @color/stroke outline). Java swaps to bg_transport_active.xml + setSelected. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/surface_pressed" />
+            <stroke android:width="@dimen/border_press" android:color="@color/accent" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/surface_high" />
+            <stroke android:width="@dimen/border_focus" android:color="@color/accent" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="#00000000" />
+            <stroke android:width="@dimen/border_hairline" android:color="@color/stroke" />
+        </shape>
+    </item>
+
+</selector>

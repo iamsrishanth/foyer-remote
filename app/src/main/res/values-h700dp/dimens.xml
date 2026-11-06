@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Larger screens (height >= 700dp): the D-pad grows into the extra height.
+     Size tokens only. No colours, no text sizes, no new tokens. -->
+<resources>
+
+    <dimen name="pad_key">88dp</dimen>
+    <dimen name="pad_ok_size">108dp</dimen>
+    <dimen name="pad_gap">8dp</dimen>
+    <dimen name="pad_key_margin">4dp</dimen>
+    <dimen name="pad_slot_height">320dp</dimen>
+    <dimen name="nav_key">64dp</dimen>
+
+</resources>

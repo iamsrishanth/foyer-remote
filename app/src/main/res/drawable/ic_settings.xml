@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Settings: gear drawn as a stroked ring, hub and eight teeth so it stays
+     hand-writable and reads at 18dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M12,6a6,6 0,1 0,0 12a6,6 0,1 0,0 -12"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" />
+    <path
+        android:pathData="M12,10a2,2 0,1 0,0 4a2,2 0,1 0,0 -4"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8" />
+    <path
+        android:pathData="M12,2.5V6M12,18v3.5M2.5,12H6M18,12h3.5M5.6,5.6L8,8M16,16l2.4,2.4M18.4,5.6L16,8M8,16l-2.4,2.4"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round" />
+</vector>

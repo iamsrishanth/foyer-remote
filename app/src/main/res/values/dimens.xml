@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Base geometry for a 4.7" ~640dp-tall phone. values-h700dp only raises the
+     D-pad size tokens; colours and text sizes are never overridden there. -->
+<resources>
+
+    <!-- 4dp base grid: 4 8 12 16 20 24 32 (DESIGN.md section 4) -->
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_md">16dp</dimen>
+    <dimen name="space_lg">24dp</dimen>
+    <dimen name="space_xl">32dp</dimen>
+
+    <!-- radii: inputs 10, pressables 14, plate/sheets 22, chips full pill -->
+    <dimen name="radius_input">10dp</dimen>
+    <dimen name="radius_key">14dp</dimen>
+    <dimen name="radius_plate">22dp</dimen>
+    <dimen name="radius_pill">100dp</dimen>
+
+    <!-- stroke weights -->
+    <dimen name="border_hairline">1dp</dimen>
+    <dimen name="border_press">1.5dp</dimen>
+    <dimen name="border_focus">2dp</dimen>
+
+    <!-- every interactive control is at least this in both dimensions -->
+    <dimen name="touch_target">48dp</dimen>
+
+    <!-- D-pad: the one thing that must never move.
+         base 76dp keys / 92dp OK, 8dp between keys, 264dp slot (3*76 + 92 + 16 + 0) -->
+    <dimen name="pad_key">76dp</dimen>
+    <dimen name="pad_ok_size">92dp</dimen>
+    <dimen name="pad_gap">8dp</dimen>
+    <!-- half of pad_gap: adjacent margins add up to the 8dp gap once -->
+    <dimen name="pad_key_margin">4dp</dimen>
+    <dimen name="pad_slot_height">264dp</dimen>
+
+    <!-- Back / Home / volume keys -->
+    <dimen name="nav_key">56dp</dimen>
+
+    <!-- icon boxes; the vectors themselves are 24dp viewport -->
+    <dimen name="icon_sm">18dp</dimen>
+    <dimen name="icon_md">24dp</dimen>
+
+</resources>

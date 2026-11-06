@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Legacy key background. Superseded by bg_pad_key.xml / bg_pad_ok.xml in the
+     new layout, kept so older Java references still resolve. Unified 14dp radius
+     with btn_bg.xml per DESIGN.md section 2. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_key" />
+            <solid android:color="@color/surface" />
+            <stroke
+                android:width="@dimen/border_hairline"
+                android:color="@color/unavailable"
+                android:dashWidth="6dp"
+                android:dashGap="4dp" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_key" />
+            <solid android:color="@color/surface_pressed" />
+            <stroke android:width="@dimen/border_focus" android:color="@color/accent" />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_key" />
+            <solid android:color="@color/surface_high" />
+            <stroke android:width="@dimen/border_focus" android:color="@color/accent" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_key" />
+            <solid android:color="@color/surface" />
+            <stroke android:width="@dimen/border_hairline" android:color="@color/divider" />
+        </shape>
+    </item>
+</selector>

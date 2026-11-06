@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Transient notice bar (presses dropped / not confirmed). Never colour-only:
+     the words carry the meaning, the warn hairline only echoes it. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/radius_key" />
+    <solid android:color="@color/surface_pressed" />
+    <stroke android:width="@dimen/border_hairline" android:color="@color/warn" />
+</shape>

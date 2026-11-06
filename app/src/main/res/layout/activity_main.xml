@@ -1,0 +1,919 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Foyer Remote â€” one screen, pad never moves.
+     Framework widgets only: LinearLayout, FrameLayout, ScrollView, ImageButton, TextView, Button.
+     Ids here are a contract with MainActivity: see the design spec section 10. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/screen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg">
+
+    <!-- ============================ main column ============================ -->
+    <LinearLayout
+        android:id="@+id/mainColumn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/space_md">
+
+        <!-- 1. Header: identity + one status node + the connection action -->
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/devName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Foyer Remote"
+                    android:textColor="@color/text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/statusRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/stateIcon"
+                        android:layout_width="@dimen/icon_sm"
+                        android:layout_height="@dimen/icon_sm"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_link"
+                        android:tint="@color/dim" />
+
+                    <TextView
+                        android:id="@+id/statusText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_sm"
+                        android:ellipsize="end"
+                        android:lineSpacingMultiplier="1.4"
+                        android:maxLines="2"
+                        android:text="Looking for projector"
+                        android:textColor="@color/text"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/statusSub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.4"
+                    android:maxLines="2"
+                    android:textColor="@color/dim"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/connectChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_sm"
+                android:background="@drawable/bg_chip"
+                android:clickable="true"
+                android:contentDescription="Connect to a projector"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/touch_target"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/space_sm"
+                android:paddingEnd="@dimen/space_sm">
+
+                <ImageView
+                    android:id="@+id/chipIcon"
+                    android:layout_width="@dimen/icon_sm"
+                    android:layout_height="@dimen/icon_sm"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_link"
+                    android:tint="@color/text" />
+
+                <TextView
+                    android:id="@+id/chipLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_xs"
+                    android:text="Change"
+                    android:textColor="@color/text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 3. Transport preference (preference, never observed reality) -->
+        <LinearLayout
+            android:id="@+id/transportGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/transportAuto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_transport_item"
+                android:clickable="true"
+                android:contentDescription="Connection: automatic"
+                android:focusable="true"
+                android:gravity="center"
+                android:minHeight="@dimen/touch_target"
+                android:padding="@dimen/space_xs"
+                android:text="Auto"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/transportWifi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_transport_item"
+                android:clickable="true"
+                android:contentDescription="Connection: Wi-Fi only"
+                android:focusable="true"
+                android:gravity="center"
+                android:minHeight="@dimen/touch_target"
+                android:padding="@dimen/space_xs"
+                android:text="Wi-Fi"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/transportBt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_transport_item"
+                android:clickable="true"
+                android:contentDescription="Connection: Bluetooth only"
+                android:focusable="true"
+                android:gravity="center"
+                android:minHeight="@dimen/touch_target"
+                android:padding="@dimen/space_xs"
+                android:text="Bluetooth"
+                android:textColor="@color/unavailable"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/transportNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:lineSpacingMultiplier="1.4"
+            android:textColor="@color/dim"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <!-- 5. Transient notice. Never overwritten by the state poll. -->
+        <TextView
+            android:id="@+id/noticeBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:background="@drawable/bg_notice"
+            android:lineSpacingMultiplier="1.4"
+            android:padding="@dimen/space_sm"
+            android:textColor="@color/text"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- 4. Pad slot: one fixed rectangle; pad and pairCard swap inside it -->
+        <FrameLayout
+            android:id="@+id/padSlot"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pad_slot_height"
+            android:layout_marginTop="@dimen/space_sm">
+
+            <LinearLayout
+                android:id="@+id/pad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/up"
+                    android:layout_width="@dimen/pad_key"
+                    android:layout_height="@dimen/pad_key"
+                    android:layout_marginBottom="@dimen/pad_gap"
+                    android:background="@drawable/bg_pad_key"
+                    android:contentDescription="Move up on projector"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_dpad_up"
+                    android:tint="@color/text" />
+
+                <LinearLayout
+                    android:id="@+id/padMidRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/left"
+                        android:layout_width="@dimen/pad_key"
+                        android:layout_height="@dimen/pad_key"
+                        android:layout_marginStart="@dimen/pad_key_margin"
+                        android:layout_marginEnd="@dimen/pad_key_margin"
+                        android:background="@drawable/bg_pad_key"
+                        android:contentDescription="Move left on projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_dpad_left"
+                        android:tint="@color/text" />
+
+                    <ImageButton
+                        android:id="@+id/ok"
+                        android:layout_width="@dimen/pad_ok_size"
+                        android:layout_height="@dimen/pad_ok_size"
+                        android:layout_marginStart="@dimen/pad_key_margin"
+                        android:layout_marginEnd="@dimen/pad_key_margin"
+                        android:background="@drawable/bg_pad_ok"
+                        android:contentDescription="Select on projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_ok"
+                        android:tint="@color/on_accent" />
+
+                    <ImageButton
+                        android:id="@+id/right"
+                        android:layout_width="@dimen/pad_key"
+                        android:layout_height="@dimen/pad_key"
+                        android:layout_marginStart="@dimen/pad_key_margin"
+                        android:layout_marginEnd="@dimen/pad_key_margin"
+                        android:background="@drawable/bg_pad_key"
+                        android:contentDescription="Move right on projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_dpad_right"
+                        android:tint="@color/text" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/down"
+                    android:layout_width="@dimen/pad_key"
+                    android:layout_height="@dimen/pad_key"
+                    android:layout_marginTop="@dimen/pad_gap"
+                    android:background="@drawable/bg_pad_key"
+                    android:contentDescription="Move down on projector"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_dpad_down"
+                    android:tint="@color/text" />
+            </LinearLayout>
+
+            <!-- Same rectangle, same height: first run, reconnect, degraded -->
+            <LinearLayout
+                android:id="@+id/pairCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/space_lg"
+                android:layout_marginEnd="@dimen/space_lg"
+                android:background="@drawable/bg_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/space_lg"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/pairTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Pair with your projector"
+                    android:textColor="@color/text"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/pairHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.4"
+                    android:text="Press MENU on the projector to read its six-digit PIN."
+                    android:textColor="@color/dim"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/pairAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:background="@drawable/bg_btn_secondary"
+                    android:minHeight="@dimen/touch_target"
+                    android:minWidth="160dp"
+                    android:stateListAnimator="@null"
+                    android:text="Set up connection"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/padHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.4"
+            android:textColor="@color/dim"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <!-- 6. Rows under the pad. weight 1 so a notice bar can never clip them. -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_xs"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/navRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/back"
+                        android:layout_width="@dimen/nav_key"
+                        android:layout_height="@dimen/nav_key"
+                        android:layout_margin="@dimen/space_xs"
+                        android:background="@drawable/bg_pad_key"
+                        android:contentDescription="Back on projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_back"
+                        android:tint="@color/text" />
+
+                    <ImageButton
+                        android:id="@+id/home"
+                        android:layout_width="@dimen/nav_key"
+                        android:layout_height="@dimen/nav_key"
+                        android:layout_margin="@dimen/space_xs"
+                        android:background="@drawable/bg_pad_key"
+                        android:contentDescription="Foyer home on projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_home"
+                        android:tint="@color/text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/volRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/volDown"
+                        android:layout_width="@dimen/nav_key"
+                        android:layout_height="@dimen/nav_key"
+                        android:layout_margin="@dimen/space_xs"
+                        android:background="@drawable/bg_pad_key"
+                        android:contentDescription="Volume down on projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_vol_down"
+                        android:tint="@color/text" />
+
+                    <ImageButton
+                        android:id="@+id/mute"
+                        android:layout_width="@dimen/nav_key"
+                        android:layout_height="@dimen/nav_key"
+                        android:layout_margin="@dimen/space_xs"
+                        android:background="@drawable/bg_pad_key"
+                        android:contentDescription="Mute projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_mute"
+                        android:tint="@color/text" />
+
+                    <ImageButton
+                        android:id="@+id/volUp"
+                        android:layout_width="@dimen/nav_key"
+                        android:layout_height="@dimen/nav_key"
+                        android:layout_margin="@dimen/space_xs"
+                        android:background="@drawable/bg_pad_key"
+                        android:contentDescription="Volume up on projector"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_vol_up"
+                        android:tint="@color/text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottomRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/appsBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/space_xs"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_secondary"
+                        android:contentDescription="Open app list"
+                        android:minHeight="@dimen/touch_target"
+                        android:stateListAnimator="@null"
+                        android:text="Apps"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/settingsBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_xs"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_secondary"
+                        android:contentDescription="Open settings"
+                        android:minHeight="@dimen/touch_target"
+                        android:stateListAnimator="@null"
+                        android:text="Settings"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- ============================ apps sheet ============================ -->
+    <LinearLayout
+        android:id="@+id/appsSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/surface"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/space_md"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Apps"
+                android:textColor="@color/text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/appsClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_btn_secondary"
+                android:contentDescription="Close app list"
+                android:minHeight="@dimen/touch_target"
+                android:minWidth="@dimen/touch_target"
+                android:stateListAnimator="@null"
+                android:text="Close"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/allAppsToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:buttonTint="@color/accent"
+            android:minHeight="@dimen/touch_target"
+            android:text="Show hidden and blocked apps"
+            android:textColor="@color/text"
+            android:textSize="13sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_sm"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:id="@+id/appList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_lg" />
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- ========================== settings sheet ========================== -->
+    <ScrollView
+        android:id="@+id/settingsSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        android:clickable="true"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:scrollbars="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/settingsColumn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Settings"
+                    android:textColor="@color/text"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/settingsClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_secondary"
+                    android:contentDescription="Close settings"
+                    android:minHeight="@dimen/touch_target"
+                    android:minWidth="@dimen/touch_target"
+                    android:stateListAnimator="@null"
+                    android:text="Close"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Wi-Fi pairing -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="Connect to projector"
+                android:textColor="@color/text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/scanBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_btn_secondary"
+                android:minHeight="@dimen/touch_target"
+                android:stateListAnimator="@null"
+                android:text="Find projector"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/foundLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:letterSpacing="0.06"
+                android:textColor="@color/dim"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/deviceList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:orientation="vertical" />
+
+            <EditText
+                android:id="@+id/ipInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_field"
+                android:hint="Projector address"
+                android:inputType="text"
+                android:minHeight="@dimen/touch_target"
+                android:paddingStart="@dimen/space_md"
+                android:paddingTop="@dimen/space_md"
+                android:paddingEnd="@dimen/space_md"
+                android:paddingBottom="@dimen/space_md"
+                android:textColor="@color/text"
+                android:textColorHint="@color/dim"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/pinInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_field"
+                android:hint="6-digit PIN"
+                android:inputType="number"
+                android:maxLength="6"
+                android:minHeight="@dimen/touch_target"
+                android:paddingStart="@dimen/space_md"
+                android:paddingTop="@dimen/space_md"
+                android:paddingEnd="@dimen/space_md"
+                android:paddingBottom="@dimen/space_md"
+                android:textColor="@color/text"
+                android:textColorHint="@color/dim"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/pairBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_btn_secondary"
+                android:minHeight="@dimen/touch_target"
+                android:stateListAnimator="@null"
+                android:text="Pair with PIN"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/connectMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:lineSpacingMultiplier="1.4"
+                android:textColor="@color/dim"
+                android:textSize="12sp" />
+
+            <!-- Bluetooth fallback -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="Bluetooth fallback"
+                android:textColor="@color/text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:lineSpacingMultiplier="1.4"
+                android:text="Not in this build"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:id="@+id/btPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/btDeviceList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:orientation="vertical" />
+
+                <Button
+                    android:id="@+id/btPermissionBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:background="@drawable/bg_btn_secondary"
+                    android:minHeight="@dimen/touch_target"
+                    android:stateListAnimator="@null"
+                    android:text="Allow Bluetooth access"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/btScanBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:background="@drawable/bg_btn_secondary"
+                    android:minHeight="@dimen/touch_target"
+                    android:stateListAnimator="@null"
+                    android:text="Look for projector"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/btPairBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:background="@drawable/bg_btn_secondary"
+                    android:minHeight="@dimen/touch_target"
+                    android:stateListAnimator="@null"
+                    android:text="Make this phone visible"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/forgetBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:background="@drawable/bg_btn_secondary"
+                android:minHeight="@dimen/touch_target"
+                android:stateListAnimator="@null"
+                android:text="Forget projector pairing"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <!-- Jellyfin -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="Jellyfin"
+                android:textColor="@color/text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/jfUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_field"
+                android:hint="Server address"
+                android:inputType="textUri"
+                android:minHeight="@dimen/touch_target"
+                android:paddingStart="@dimen/space_md"
+                android:paddingTop="@dimen/space_md"
+                android:paddingEnd="@dimen/space_md"
+                android:paddingBottom="@dimen/space_md"
+                android:textColor="@color/text"
+                android:textColorHint="@color/dim"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/jfKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_field"
+                android:hint="API key"
+                android:inputType="textPassword"
+                android:minHeight="@dimen/touch_target"
+                android:paddingStart="@dimen/space_md"
+                android:paddingTop="@dimen/space_md"
+                android:paddingEnd="@dimen/space_md"
+                android:paddingBottom="@dimen/space_md"
+                android:textColor="@color/text"
+                android:textColorHint="@color/dim"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/jfSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_btn_secondary"
+                android:minHeight="@dimen/touch_target"
+                android:stateListAnimator="@null"
+                android:text="Save Jellyfin"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/jfMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:lineSpacingMultiplier="1.4"
+                android:textColor="@color/dim"
+                android:textSize="12sp" />
+
+            <!-- Diagnostics -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="Diagnostics"
+                android:textColor="@color/text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/diagText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:lineSpacingMultiplier="1.4"
+                android:textColor="@color/dim"
+                android:textIsSelectable="true"
+                android:textSize="11sp"
+                android:typeface="monospace" />
+
+            <Button
+                android:id="@+id/diagRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_btn_secondary"
+                android:minHeight="@dimen/touch_target"
+                android:stateListAnimator="@null"
+                android:text="Refresh diagnostics"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="15sp" />
+
+            <!-- Unsupported on this projector -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="Not supported on this projector"
+                android:textColor="@color/unavailable"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/recents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:background="@drawable/bg_btn_secondary"
+                android:minHeight="@dimen/touch_target"
+                android:stateListAnimator="@null"
+                android:text="Recents (no effect)"
+                android:textAllCaps="false"
+                android:textColor="@color/unavailable"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:lineSpacingMultiplier="1.4"
+                android:text="Recents is a platform no-op: the projector accepts the command and nothing changes."
+                android:textColor="@color/unavailable"
+                android:textSize="11sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_lg" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

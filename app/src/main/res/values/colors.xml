@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Foyer Remote colour tokens. Roles and contrast ratios: DESIGN.md section 2.
+     Accent appears only as state and action; it is never a background flood. -->
+<resources>
+
+    <!-- surfaces -->
+    <color name="bg">#0B0E14</color>
+    <color name="surface">#161C27</color>
+    <color name="surface_high">#1F2937</color>
+    <color name="surface_pressed">#26334A</color>
+
+    <!-- accent + the only text colour allowed on a solid accent fill -->
+    <color name="accent">#5AA9FF</color>
+    <color name="accent_pressed">#7FC0FF</color>
+    <color name="on_accent">#08111C</color>
+
+    <!-- text -->
+    <color name="text">#F2F5FA</color>
+    <color name="dim">#9AA3B2</color>
+    <color name="unavailable">#8A94A6</color>
+
+    <!-- state -->
+    <color name="ok">#4ADE80</color>
+    <color name="warn">#FFC46B</color>
+    <color name="bad">#FF8F8F</color>
+
+    <!-- hairlines -->
+    <color name="divider">#242E3C</color>
+    <color name="stroke">#242E3C</color>
+
+    <!-- 20% accent, used only as the framework control highlight -->
+    <color name="highlight">#335AA9FF</color>
+
+    <!-- aliases kept so both DESIGN.md token names and the short forms resolve -->
+    <color name="on_acc">#08111C</color>
+    <color name="unavail">#8A94A6</color>
+
+</resources>

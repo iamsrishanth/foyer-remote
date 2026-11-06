@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- OK key. The accent fill is the one solid accent surface in the app, so the
+     glyph is tinted @color/on_accent (7.73:1) in the layout; not @color/text,
+     which would measure 2.25:1 on this fill. Distinctness comes from fill,
+     stroke and size, never from hue alone. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false">
+        <shape android:shape="oval">
+            <solid android:color="@color/surface_high" />
+            <stroke
+                android:width="@dimen/border_hairline"
+                android:color="@color/unavailable"
+                android:dashWidth="6dp"
+                android:dashGap="4dp" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/accent_pressed" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/accent" />
+            <stroke android:width="@dimen/border_focus" android:color="@color/on_accent" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/accent" />
+        </shape>
+    </item>
+
+</selector>
