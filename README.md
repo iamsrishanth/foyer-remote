@@ -92,7 +92,7 @@ On the build machine:
 cd ~/foyer-remote && ./gradlew assembleDebug testDebugUnitTest --no-daemon
 ```
 
-`testDebugUnitTest` runs 24 plain-JUnit tests: 15 for the routing rules (`InputCoreTest`) and 9 for
+`testDebugUnitTest` runs 25 plain-JUnit tests: 17 for the routing rules (`InputCoreTest`) and 8 for
 the HID report bytes (`HidReportTest`). Nothing else is tested automatically; device behaviour is
 verified by hand on the target projector.
 
